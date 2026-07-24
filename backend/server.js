@@ -36,6 +36,8 @@ const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
 
+connectDatabase();
+
     console.log(`Server running on Port ${PORT}`);
 
 });
