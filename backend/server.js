@@ -1,26 +1,30 @@
-// ==============================
-// NEXEARN BACKEND
-// ==============================
+// =====================================
+// NEXEARN BACKEND SERVER
+// =====================================
 
-const http = require("http");
+const express = require("express");
+const cors = require("cors");
 
-const PORT = process.env.PORT || 3000;
+const app = express();
 
-const server = http.createServer((req, res) => {
+app.use(cors());
+app.use(express.json());
 
-    res.writeHead(200, {
-        "Content-Type": "application/json"
-    });
+app.get("/", (req, res) => {
 
-    res.end(JSON.stringify({
+    res.json({
         success: true,
-        project: "NexEarn Backend",
-        status: "Online",
-        version: "1.0.0"
-    }));
+        project: "NexEarn",
+        version: "1.0.0",
+        message: "Backend API is running successfully."
+    });
 
 });
 
-server.listen(PORT, () => {
-    console.log(`NexEarn Backend running on port ${PORT}`);
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+
+    console.log(`Server running on Port ${PORT}`);
+
 });
