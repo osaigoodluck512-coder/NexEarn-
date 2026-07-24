@@ -1,3 +1,4 @@
+const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 
@@ -69,6 +70,97 @@ exports.register = async (req, res) => {
             success:true,
 
             message:"Registration Successful"
+
+        });
+
+    }catch(error){
+
+        res.status(500).json({
+
+            success:false,
+
+            message:error.message
+
+        });
+
+    }
+
+};
+exports.login = async (req, res) => {
+
+    try{
+
+        const { email, password } = req.body;
+
+        const user = await User.findOne({ email });
+
+        if(!user){
+
+            return res.status(401).json({
+
+                success:false,
+
+                message:"Invalid email or password."
+
+            });
+
+        }
+
+        const passwordMatch = await bcrypt.compare(password, user.password);
+
+        if(!passwordMatch){
+
+            return res.status(401).json({
+
+                success:false,
+
+                message:"Invalid email or password."
+
+            });
+
+        }
+
+        const token = jwt.sign(
+
+            {
+                id:user._id
+            },
+
+            process.env.JWT_SECRET || "nexearn-secret",
+
+            {
+                expiresIn:"7d"
+            }
+
+        );
+
+        res.json({
+
+            success:true,
+
+            message:"Login Successful",
+
+            token,
+
+            user:{
+
+                id:user._id,
+
+                username:user.username,
+
+                email:user.email,
+
+                balance:user.balance,
+
+                totalEarnings:user.totalEarnings,
+
+                activeInvestment:user.activeInvestment,
+
+                totalDeposit:user.totalDeposit,
+
+                totalWithdrawal:user.totalWithdrawal
+
+            }
 
         });
 
