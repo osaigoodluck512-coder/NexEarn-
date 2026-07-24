@@ -34,10 +34,9 @@ app.get("/", (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
-
 connectDatabase();
 
+app.listen(PORT, () => {
     console.log(`Server running on Port ${PORT}`);
 
 });
