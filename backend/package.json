@@ -1,1 +1,8 @@
-u
+{
+  "name": "nexearn-backend",
+  "version": "1.0.0",
+  "description": "NexEarn Backend API",
+  "main": "server.js",
+  "author": "NexEarn",
+  "license": "MIT"
+}
